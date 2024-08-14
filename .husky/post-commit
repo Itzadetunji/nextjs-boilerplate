@@ -1,0 +1,19 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo '🚧👷 Running linting, testing, and building tasks before committing...'
+
+# Run lint-staged to lint and test staged files
+npx lint-staged
+
+# Check if linting and testing passed
+if [ $? -eq 0 ]; then
+  echo '✅ Linting and testing passed. Building your project...'
+
+  # Add your build commands here if needed
+
+  # If everything is successful, allow the commit
+  echo '✅✅✅✅ Ready to commit. ✅✅✅✅'
+else
+  echo '❌ Linting or testing failed. Please fix the issues before committing.'
+fi
