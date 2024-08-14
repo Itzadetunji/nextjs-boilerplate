@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, buttonVariants } from "@/components/ui/button";
 import { getStartOfCurrentMonth } from "@/utils/date";
 import { cn } from "@/lib/utils";

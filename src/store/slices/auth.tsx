@@ -1,3 +1,5 @@
+"use client";
+
 import { UseQueryError } from "@/hooks/useQueryError";
 import { APIVersion1GetRequest, APIVersion1Register } from "@/http/v1";
 import { useMutation, useQuery } from "@tanstack/react-query";
