@@ -1,0 +1,52 @@
+.hamburger__btn {
+	display: flex;
+	align-items: center; /* Align items vertically */
+	justify-content: center; /* Align items horizontally */
+	cursor: pointer;
+	z-index: 1;
+}
+
+#hamburger__toggle:checked + .hamburger__btn > span {
+	transform: rotate(45deg);
+}
+
+#hamburger__toggle:checked + .hamburger__btn > span::before {
+	top: 0;
+	transform: rotate(0deg);
+}
+
+#hamburger__toggle:checked + .hamburger__btn > span::after {
+	top: 0;
+	transform: rotate(90deg);
+}
+
+#hamburger__toggle:checked ~ .menu__box {
+	left: 0 !important;
+}
+
+.hamburger__btn {
+	cursor: pointer;
+	z-index: 1;
+}
+
+.hamburger__btn > span,
+.hamburger__btn > span::before,
+.hamburger__btn > span::after {
+	display: block;
+	position: absolute;
+	width: 18px;
+	height: 2px;
+	background-color: white;
+	transition-duration: 0.25s;
+	border-radius: 8px;
+}
+
+.hamburger__btn > span::before {
+	content: "";
+	top: -6.5px;
+}
+
+.hamburger__btn > span::after {
+	content: "";
+	top: 6.5px;
+}

@@ -9,6 +9,7 @@ export interface ICustomCheckboxProps {
 	id: string;
 	backgroundColor?: string;
 	borderColor?: string;
+	containerClassName?: string;
 	className?: string;
 	hasText?: boolean;
 	textBefore?: string;
@@ -20,13 +21,14 @@ const Checkbox: React.FC<ICustomCheckboxProps> = ({
 	isChecked,
 	id,
 	className,
+	containerClassName,
 	hasText,
 	textBefore,
 	textAfter,
 }) => {
 	return (
 		<button
-			className="inline-flex items-center"
+			className={cn("inline-flex items-center", containerClassName)}
 			onClick={handleCheckboxChange}
 		>
 			{textBefore && <p>{textBefore}</p>}

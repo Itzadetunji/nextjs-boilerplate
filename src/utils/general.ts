@@ -1,3 +1,7 @@
+import { getAllCountries, getAllTimezones } from "countries-and-timezones";
+import { State } from "country-state-city";
+import { countryOptions } from "./constants";
+
 /**
  * Converts a hex color code to an RGB object.
  *
@@ -44,4 +48,66 @@ export const changeTheme = (theme: string) => {
 	const { r, g, b } = hexToRGB(theme);
 	document.documentElement.style.setProperty("--primary", `${r} ${g} ${b}`);
 	return theme;
+};
+
+/**
+ * Retrieves a list of states/provinces based on the selected country.
+ *
+ * This function takes a country name as input, finds the corresponding country code,
+ * and returns an array of state/province options for that country. Each option includes
+ * the state's name as the label and the state's country code as the value.
+ *
+ * @param {string} country - The name of the country for which to retrieve states/provinces.
+ * @returns {Array<{ label: string; value: string }>} An array of objects where each object
+ *          contains the label (state name) and value (state country code).
+ */
+export const statesOptions = (country: string) =>
+	country
+		? Object.values(
+				State.getStatesOfCountry(
+					countryOptions.find((c) => c.label === country)?.value
+				)
+			).map((state) => ({
+				label: state.name,
+				value: state.countryCode,
+			}))
+		: [];
+
+/**
+ * Retrieves a list of countries with their corresponding timezones.
+ *
+ * This function fetches all available countries and their associated timezones,
+ * and then generates an array of objects that includes the country name with its
+ * UTC offset for each timezone.
+ *
+ * @returns {Array<{ label: string; value: string }>} An array of objects where each object
+ *          contains the label (country name with UTC offset) and value (country ID with UTC offset).
+ */
+export const getAllCountriesWithTimezones = () => {
+	const allCountries = getAllCountries();
+	const allTimezones = getAllTimezones();
+	let countriesTimezones: Array<{ label: string; value: string }> = [];
+
+	for (const countryCode in allCountries) {
+		if (Object.prototype.hasOwnProperty.call(allCountries, countryCode)) {
+			const country =
+				allCountries[countryCode as keyof typeof allCountries];
+			const countryTimezones = country.timezones;
+
+			const timezones = countryTimezones.map((tz) => {
+				const timezone = allTimezones[tz];
+				const offset = parseInt(
+					timezone.utcOffsetStr.split(":")[0],
+					10
+				);
+				return {
+					label: `${country.name} (UTC ${offset > 0 ? "+" + offset : offset})`,
+					value: `${country.id}|UTC ${offset > 0 ? "+" + offset : offset}`,
+				};
+			});
+			countriesTimezones = [...countriesTimezones, ...timezones];
+		}
+	}
+
+	return countriesTimezones;
 };

@@ -18,8 +18,8 @@ interface DatePickerProps {
 export function DatePicker({
 	className,
 	date,
-	toDate,
-	setDate,
+	// toDate,
+	// setDate,
 }: DatePickerProps) {
 	const [popoverOpen, setPopoverOpen] = React.useState(false);
 	return (

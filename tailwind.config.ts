@@ -68,6 +68,12 @@ const config = {
 					6: "#F7F7F7",
 					7: "#6D748D",
 				},
+				green: {
+					100: "#48AA75",
+				},
+				gray: {
+					100: "#858C95",
+				},
 			},
 			fontFamily: {
 				hoves: ["TT Hoves Pro Trial", "sans-serif"],
