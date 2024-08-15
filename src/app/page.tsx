@@ -2,6 +2,7 @@
 
 import ContactUsModal from "@/components/ContactUsModal";
 import Footer from "@/components/Footer";
+import BookADemo from "@/components/Home/BookADemo";
 import CoreFeatures from "@/components/Home/CoreFeatures/CoreFeatures";
 import HeroSection from "@/components/Home/HeroSection";
 import HoursSaved from "@/components/Home/HoursSaved";
@@ -40,6 +41,10 @@ const Home: NextPage = () => {
 			<ContactUsModal
 				show={showContactUsModal}
 				setShow={setshowContactUsModal}
+			/>
+			<BookADemo
+				showBookADemo={showBookADemo}
+				setShowBookDemo={setShowBookDemo}
 			/>
 		</>
 	);

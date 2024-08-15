@@ -4,6 +4,7 @@ import OurMission from "@/components/About/OurMission";
 import OurStory from "@/components/About/OurStory";
 import ContactUsModal from "@/components/ContactUsModal";
 import Footer from "@/components/Footer";
+import BookADemo from "@/components/Home/BookADemo";
 import Navbar from "@/components/Home/Navbar";
 import Subscribe from "@/components/Home/Subscribe";
 import { NextPage } from "next";
@@ -31,6 +32,10 @@ const About: NextPage = () => {
 			<ContactUsModal
 				show={showContactUsModal}
 				setShow={setshowContactUsModal}
+			/>
+			<BookADemo
+				showBookADemo={showBookADemo}
+				setShowBookDemo={setShowBookDemo}
 			/>
 		</>
 	);

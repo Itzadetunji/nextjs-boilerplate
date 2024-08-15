@@ -7,8 +7,6 @@ import { z } from "zod";
 import useCustomToast from "../CustomToast";
 import { LoaderButton } from "../ui-extended/loader-button";
 import { Input } from "../ui/input";
-// import Loader from "../../Loader/Loader";
-// import { InputPatterns } from "../../../util/Constants";
 
 const subscribeFormSchema = z.object({
 	email: z

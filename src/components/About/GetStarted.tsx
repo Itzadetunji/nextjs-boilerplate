@@ -59,10 +59,6 @@ const GetStarted: React.FC<{
 					</div>
 				</div>
 			</section>
-			{/* <ContactUsModal
-				show={showContactUsModal}
-				setShow={setshowContactUsModal}
-			/> */}
 		</>
 	);
 };

@@ -1,12 +1,11 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
-import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import "@/styles/hamburger.module.css";
-import BookADemo from "./BookADemo";
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Button } from "../ui/button";
 
 const Navbar: React.FC<{
 	isWhite?: boolean;
@@ -14,8 +13,7 @@ const Navbar: React.FC<{
 	setShowBookDemo: Dispatch<SetStateAction<boolean>>;
 	showContactUsModal: boolean;
 	setshowContactUsModal: Dispatch<SetStateAction<boolean>>;
-}> = ({ isWhite, showBookADemo, setShowBookDemo, setshowContactUsModal }) => {
-	// const navigate = useNavigate();
+}> = ({ isWhite, setShowBookDemo, setshowContactUsModal }) => {
 	const [isMobileShowing, setIsMobileShowing] = useState(false);
 
 	const [hasScrolled, setHasScrolled] = useState(false);
@@ -126,7 +124,7 @@ const Navbar: React.FC<{
 										setShowSelectLogin(false)
 									}
 									className={cn(
-										"relative h-9 max-h-[40px] border py-2.5 text-base text-sm font-medium font-semibold duration-200 ease-in-out sm:w-[103px] lg:h-10 mlg:px-3 mlg:py-2",
+										"relative h-9 max-h-[40px] border py-2.5 text-sm font-medium duration-200 ease-in-out sm:w-[103px] lg:h-10 mlg:px-3 mlg:py-2",
 										{
 											"border-[#043B6D] bg-white text-[#043B6D] hover:border-[#3EC9BC] hover:bg-white hover:text-[#3EC9BC]":
 												hasScrolled ||
@@ -243,10 +241,6 @@ const Navbar: React.FC<{
 					/>
 				</div>
 			</nav>
-			<BookADemo
-				showBookADemo={showBookADemo}
-				setShowBookDemo={setShowBookDemo}
-			/>
 		</>
 	);
 };
