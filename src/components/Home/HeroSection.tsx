@@ -29,7 +29,7 @@ const HeroSection: React.FC<{
 					<div className="flex flex-col space-y-11 px-4 lg:pl-[112px] mxs:px-8">
 						<div className="flex max-w-[717px] flex-col space-y-9">
 							<div className="font-bold leading-[60px] tracking-[-0.96px]">
-								<h1 className="text-[28px] text-white sm:!text-[42px] xl:whitespace-nowrap xs:text-[32px]">
+								<h1 className="text-[28px] leading-[1.1] text-white sm:!text-[42px] xl:whitespace-nowrap xs:text-[32px]">
 									Optimizing Operational Efficiency{" "}
 									<br className="mxl:hidden" /> for{" "}
 									<AnimatePresence mode="wait">

@@ -26,9 +26,7 @@ const Navbar: React.FC<{
 		exit: { opacity: 0 },
 	};
 
-	console.log("deqd");
 	useEffect(() => {
-		console.log("deqd");
 		setRootElement(document.getElementById("root"));
 		window.addEventListener("scroll", () => {
 			if (window.scrollY > 20) {
