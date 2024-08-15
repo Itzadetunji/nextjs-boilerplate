@@ -2,7 +2,7 @@ import { APIVersion1SubscribeVisitor } from "@/http/v1";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
-export const SubscribeVisitorSlice = (
+export const ContactUsSlice = (
 	onSuccess: (data: AxiosResponse<Record<string, string>>) => void = () => {
 		return;
 	},

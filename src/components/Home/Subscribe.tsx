@@ -1,15 +1,12 @@
-import axios, { AxiosError } from "axios";
-import React, { useState } from "react";
-import { SubmitHandler, FieldValues, useForm } from "react-hook-form";
-import { InputPatterns } from "@/utils/constants";
-import useCustomToast from "../CustomToast";
-import Loader from "../Loader";
-import { Button } from "../ui/button";
 import { SubscribeVisitorSlice } from "@/store/slices/subscribe";
-import { Input } from "../ui/input";
-import { LoaderButton } from "../ui-extended/loader-button";
-import { z } from "zod";
+import { InputPatterns } from "@/utils/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+import useCustomToast from "../CustomToast";
+import { LoaderButton } from "../ui-extended/loader-button";
+import { Input } from "../ui/input";
 // import Loader from "../../Loader/Loader";
 // import { InputPatterns } from "../../../util/Constants";
 
@@ -83,7 +80,7 @@ const Subscribe: React.FC = () => {
 						<LoaderButton
 							type="submit"
 							disabled={subscribeVisitor.isPending}
-							className="relative flex h-[46px] items-center justify-center rounded-none bg-[#043B6D] px-5 text-white ease-in-out hover:text-[#72F4E8] md:rounded-r-md mmd:rounded-md"
+							className="relative flex h-[46px] items-center justify-center rounded-none bg-[#043B6D] px-5 text-base font-medium text-white ease-in-out hover:text-[#72F4E8] md:rounded-r-md mmd:rounded-md"
 							loading={subscribeVisitor.isPending}
 							loaderSize={22}
 						>

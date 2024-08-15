@@ -14,6 +14,7 @@ export interface ICustomCheckboxProps {
 	hasText?: boolean;
 	textBefore?: string;
 	textAfter?: string;
+	props?: any;
 }
 
 const Checkbox: React.FC<ICustomCheckboxProps> = ({
@@ -25,6 +26,7 @@ const Checkbox: React.FC<ICustomCheckboxProps> = ({
 	hasText,
 	textBefore,
 	textAfter,
+	...props
 }) => {
 	return (
 		<button
@@ -45,6 +47,7 @@ const Checkbox: React.FC<ICustomCheckboxProps> = ({
 					)}
 					checked={isChecked}
 					readOnly
+					{...props}
 				/>
 				<span className="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
 					<svg

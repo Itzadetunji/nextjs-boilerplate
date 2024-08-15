@@ -60,7 +60,7 @@ const HeroSection: React.FC<{
 						<div className="flex space-x-2.5 mlg:hidden">
 							<Button
 								onClick={() => setShowBookDemo(true)}
-								className="h-10 w-[133px] rounded-[6px] bg-white text-sm font-medium text-[#043B6D] hover:border-[#34D3C4] hover:bg-[#34D3C4] hover:text-[#053969]"
+								className="h-10 w-[133px] rounded-[6px] bg-white text-base font-semibold text-[#043B6D] hover:border-[#34D3C4] hover:bg-[#34D3C4] hover:text-[#053969]"
 								disabled={false}
 							>
 								Book A Demo
@@ -72,7 +72,7 @@ const HeroSection: React.FC<{
 										"https://admin.migranium.com/sign-up"
 									);
 								}}
-								className="h-10 w-[133px] rounded-[6px] border border-[#E5E5E7] bg-[#043B6D] text-white hover:border-[#34D3C4] hover:text-[#34D3C4]"
+								className="h-10 w-[133px] rounded-[6px] border border-[#E5E5E7] bg-[#043B6D] text-base font-semibold text-white hover:border-[#34D3C4] hover:text-[#34D3C4]"
 							>
 								Sign Up
 							</Button>
@@ -92,7 +92,7 @@ const HeroSection: React.FC<{
 										"https://calendly.com/migranium?primary_color=043b6d"
 									)
 								}
-								className="h-12 w-[138px] rounded-[6px] bg-white text-sm font-medium text-[#043B6D] hover:border-[#34D3C4] hover:bg-[#34D3C4] hover:text-[#053969]"
+								className="h-12 w-[138px] rounded-[6px] bg-white text-base font-semibold text-[#043B6D] hover:border-[#34D3C4] hover:bg-[#34D3C4] hover:text-[#053969]"
 								disabled={false}
 							>
 								Book A Demo
@@ -104,7 +104,7 @@ const HeroSection: React.FC<{
 										"https://admin.migranium.com/sign-up"
 									);
 								}}
-								className="h-12 w-[138px] rounded-[6px] border border-[#E5E5E7] bg-[#043B6D] text-white hover:border-[#34D3C4] hover:text-[#34D3C4]"
+								className="h-12 w-[138px] rounded-[6px] border border-[#E5E5E7] bg-[#043B6D] text-base font-semibold text-white hover:border-[#34D3C4] hover:text-[#34D3C4]"
 							>
 								Sign Up
 							</Button>

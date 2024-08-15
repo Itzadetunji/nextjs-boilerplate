@@ -15,3 +15,8 @@ export const APIVersion1SubscribeVisitor = async (
 	data: FieldValues
 ): Promise<AxiosResponse<Record<string, string>>> =>
 	$http.post("/subscription-emails/add", data).then((res) => res.data);
+
+export const APIVersion1ContactUs = async (
+	data: FieldValues
+): Promise<AxiosResponse<Record<string, string>>> =>
+	$http.post("/admin/customercontacts", data).then((res) => res.data);
