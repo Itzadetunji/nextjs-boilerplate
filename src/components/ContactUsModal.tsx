@@ -64,27 +64,26 @@ const ContactUsModal: React.FC<{
 	const [countryCode, setCountryCode] = useState("+1");
 	const customToast = useCustomToast();
 
-	// const contactUsOnSuccess = () => {
-	// 	customToast("Message sent 😁, you would here from us soon", {
-	// 		id: "contact-us",
-	// 		type: "success",
-	// 		duration: 10000,
-	// 	});
-
-	// 	setTimeout(() => {
-	// 		setShow(false);
-	// 	}, 1500);
-	// };
-
-	// const contactUsOnError = () => {
-	// 	customToast("An error occured kindly try again later", {
-	// 		id: "contact-us",
-	// 		type: "error",
-	// 		duration: 5000,
-	// 	});
-	// };
-
-	const contactUsMutaion = ContactUsSlice();
+	const contactUsMutaion = ContactUsSlice(
+		() => {
+			setShow(false);
+			setTimeout(() => {
+				customToast("Message sent 😁, you would here from us soon", {
+					id: "contact-us",
+					type: "success",
+					duration: 5000,
+				});
+				reset();
+			}, 1500);
+		},
+		() => {
+			customToast("An error occured kindly try again later", {
+				id: "contact-us",
+				type: "error",
+				duration: 5000,
+			});
+		}
+	);
 
 	const onSubmit: SubmitHandler<z.infer<typeof contactUsFormSchema>> = async (
 		data
@@ -281,24 +280,12 @@ const ContactUsModal: React.FC<{
 						</div>
 					</div>
 					<LoaderButton
-						// disabled={contactUsMutaion.isLoading}
+						disabled={contactUsMutaion.isPending}
+						loading={contactUsMutaion.isPending}
+						loaderSize={20}
 						className="relative h-[46px] w-full self-end bg-[#053969] text-base font-semibold text-white duration-200 ease-in-out hover:bg-[#72F4E8] hover:text-[#053969] sm:max-w-[144px]"
 						type="submit"
 					>
-						{/* <p
-								style={{
-									visibility: contactUsMutaion.isLoading
-										? "hidden"
-										: "visible",
-								}}
-							>
-								Send Message
-							</p>
-							{contactUsMutaion.isLoading && (
-								<figure className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-									<Loader size={24} />
-								</figure>
-							)} */}
 						Send Message
 					</LoaderButton>
 				</form>
