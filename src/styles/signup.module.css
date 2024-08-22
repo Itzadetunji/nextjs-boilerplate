@@ -1,0 +1,21 @@
+.clock-background-image {
+	background-color: #ebf2f6;
+}
+
+@media (max-width: 767px) {
+	.clock-background-image {
+		background-size: cover;
+		background-image: url("/assets/icons/sign-in-clocks-2.svg");
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+}
+
+@media (min-width: 768px) {
+	.clock-background-image {
+		background-image: url("/assets/icons/sign-in-clocks.svg");
+		background-repeat: no-repeat;
+		background-position: center;
+    background-size: cover;
+	}
+}

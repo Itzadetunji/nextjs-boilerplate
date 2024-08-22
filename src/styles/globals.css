@@ -3,6 +3,7 @@
 
 @import url("hamburger.module.css");
 @import url("loader.module.css");
+@import url("signup.module.css");
 
 @tailwind base;
 @tailwind components;
