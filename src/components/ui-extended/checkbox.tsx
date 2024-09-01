@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 
-export interface ICustomCheckboxProps {
+export interface CheckBoxProps {
 	handleCheckboxChange: () => void;
 	isChecked: boolean;
 	id: string;
@@ -17,7 +17,7 @@ export interface ICustomCheckboxProps {
 	props?: any;
 }
 
-const Checkbox: React.FC<ICustomCheckboxProps> = ({
+const Checkbox: React.FC<CheckBoxProps> = ({
 	handleCheckboxChange,
 	isChecked,
 	id,

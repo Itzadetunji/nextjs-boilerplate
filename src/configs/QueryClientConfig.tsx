@@ -2,6 +2,7 @@
 
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import useHelpCrunchIdentify from "@/hooks/useHelpCrunchIdentify";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -22,6 +23,7 @@ const queryClient = new QueryClient({
 });
 
 const QueryClientConfig = ({ children }: { children: React.ReactNode }) => {
+	useHelpCrunchIdentify();
 	return (
 		<QueryClientProvider client={queryClient}>
 			{children}

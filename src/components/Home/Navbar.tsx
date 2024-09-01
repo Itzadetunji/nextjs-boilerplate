@@ -6,6 +6,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "../ui/tooltip";
 
 const Navbar: React.FC<{
 	isWhite?: boolean;
@@ -18,13 +24,6 @@ const Navbar: React.FC<{
 
 	const [hasScrolled, setHasScrolled] = useState(false);
 	const [rootElement, setRootElement] = useState<null | HTMLElement>(null);
-	const [showSelectLogin, setShowSelectLogin] = useState(false);
-
-	const fadeInVariants = {
-		hidden: { opacity: 0 },
-		visible: { opacity: 1 },
-		exit: { opacity: 0 },
-	};
 
 	useEffect(() => {
 		setRootElement(document.getElementById("root"));
@@ -109,83 +108,73 @@ const Navbar: React.FC<{
 								/>
 							</div>
 							<div className="flex items-center space-x-4 sm:space-x-2.5">
-								<Button
-									disabled={false}
-									type="button"
-									onClick={() =>
-										setShowSelectLogin(!showSelectLogin)
-									}
-									onMouseEnter={() =>
-										setShowSelectLogin(true)
-									}
-									onMouseLeave={() =>
-										setShowSelectLogin(false)
-									}
-									className={cn(
-										"relative h-9 max-h-[40px] border py-2.5 text-sm font-medium duration-200 ease-in-out sm:w-[103px] lg:h-10 mlg:px-3 mlg:py-2",
-										{
-											"border-[#043B6D] bg-white text-[#043B6D] hover:border-[#3EC9BC] hover:bg-white hover:text-[#3EC9BC]":
-												hasScrolled ||
-												(isMobileShowing &&
-													hasScrolled),
+								<TooltipProvider>
+									<Tooltip delayDuration={0}>
+										<TooltipTrigger asChild>
+											<Button
+												className={cn(
+													"relative h-9 max-h-[40px] border py-2.5 text-sm font-medium duration-200 ease-in-out sm:w-[103px] lg:h-10 mlg:px-3 mlg:py-2",
+													{
+														"border-[#043B6D] bg-white text-[#043B6D] hover:border-[#3EC9BC] hover:bg-white hover:text-[#3EC9BC]":
+															hasScrolled ||
+															(isMobileShowing &&
+																hasScrolled) ||
+															isWhite,
 
-											"border-white bg-[#043B6D] text-white hover:border-[#72F4E8] hover:bg-[#043B6D] hover:!text-[#72F4E8]":
-												!hasScrolled,
-										}
-									)}
-								>
-									Log in
-									<AnimatePresence>
-										{showSelectLogin && (
-											<motion.div
-												className="absolute -left-[60px] top-full mt-1 flex w-[341px] -translate-x-1/2 items-center justify-between space-x-2.5 rounded-[4px] bg-white p-[1px] drop-shadow-lg sm:-left-7 lg:left-1/2"
-												variants={fadeInVariants}
-												initial="hidden"
-												animate="visible"
-												exit="exit"
-												transition={{ duration: 0.25 }}
-											>
-												<button
-													className="flex flex-1 items-center justify-between space-x-3 self-stretch rounded-[3px] py-2 pl-4 duration-200 hover:bg-[#72F4E8]"
-													type="button"
-													onClick={() =>
-														window.open(
-															"https://spaces.migranium.com",
-															"_blank"
-														)
+														"border-white bg-[#043B6D] text-white hover:border-[#72F4E8] hover:bg-[#043B6D] hover:!text-[#72F4E8]":
+															!hasScrolled &&
+															!isWhite,
 													}
-												>
-													<p className="trackind-[-0.1px] py-3 text-[13px] font-normal leading-[15px] text-[#323539]">
-														Spaces
-													</p>
-													<img
-														src="/assets/images/spaces.svg"
-														alt=""
-													/>
-												</button>
-												<div className="h-[20px] w-[1px] bg-[#E7E7E7]" />
-												<button
-													className="flex flex-1 items-center justify-between space-x-3 self-stretch rounded-[3px] py-2 pr-4 duration-200 hover:bg-[#72F4E8]"
-													type="button"
-													onClick={() => {
-														window.open(
-															"https://admin.migranium.com",
-															"_blank"
-														);
-													}}
-												>
-													<p className="trackind-[-0.1px] py-3 text-[13px] font-normal leading-[15px] text-[#323539]">
-														Flow & Scheduler
-													</p>
-													<img
-														src="/assets/images/flow-and-scheduler.svg"
-														alt=""
-													/>
-												</button>
-											</motion.div>
-										)}
-									</AnimatePresence>
-								</Button>
+												)}
+											>
+												Sign in
+											</Button>
+										</TooltipTrigger>
+										<TooltipContent
+											side="bottom"
+											align="center"
+											className="flex w-[341px] items-center justify-between space-x-2.5 rounded-[4px] bg-white p-[1px] drop-shadow-lg"
+										>
+											<button
+												className="flex flex-1 items-center justify-between space-x-3 self-stretch rounded-[3px] py-2 pl-4 duration-200 hover:bg-[#72F4E8]"
+												type="button"
+												onClick={() =>
+													window.open(
+														"https://spaces.migranium.com",
+														"_blank"
+													)
+												}
+											>
+												<p className="trackind-[-0.1px] py-3 text-[13px] font-normal leading-[15px] text-[#323539]">
+													Spaces
+												</p>
+												<img
+													src="/assets/images/spaces.svg"
+													alt="Spaces"
+												/>
+											</button>
+											<div className="h-[20px] w-[1px] bg-[#E7E7E7]" />
+											<button
+												className="flex flex-1 items-center justify-between space-x-3 self-stretch rounded-[3px] py-2 pr-4 duration-200 hover:bg-[#72F4E8]"
+												type="button"
+												onClick={() =>
+													window.open(
+														"https://admin.migranium.com",
+														"_blank"
+													)
+												}
+											>
+												<p className="trackind-[-0.1px] py-3 text-[13px] font-normal leading-[15px] text-[#323539]">
+													Flow & Scheduler
+												</p>
+												<img
+													src="/assets/images/flow-and-scheduler.svg"
+													alt="Flow & Scheduler"
+												/>
+											</button>
+										</TooltipContent>
+									</Tooltip>
+								</TooltipProvider>
 								<button
 									type="button"
 									onClick={() =>
@@ -394,14 +383,14 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
 							>
 								Book a Demo
 							</Button>
-							<a href="https://admin.migranium.com/sign-up">
+							<Link href="/sign-up">
 								<Button
 									className="text-base font-semibold text-[#323539]"
 									variant="ghost"
 								>
 									Sign up
 								</Button>
-							</a>
+							</Link>
 						</div>
 					</motion.div>
 				)}

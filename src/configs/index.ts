@@ -23,18 +23,33 @@ const GLOBAL_CONSTANTS = {
 	APP_NAME: packageInfo.name,
 
 	URL: {
-		API_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
-		API_VERSION: process.env.NEXT_API_VERSION,
-		CLIENT_URL: process.env.VITE_CLIENT_URL,
+		API_BASE_URL: process.env.NEXT_PUBLIC_BASE_API_URL,
+		API_VERSION: process.env.NEXT_PUBLIC_BASE_API_VERSION,
+		CLIENT_URL: process.env.NEXT_PUBLIC_CLIENT_URL,
 	},
+
+	// App Level Configs
 
 	// Sentry & Monitoring Configs
 	// ============================================================
-	SENTRY: {
-		RELEASE: APP_VERSION,
-		DSN: "", // TODO: Add Sentry DSN here
-		PROJECT: "", // TODO: Add Sentry Project here
-		ORGANISATION: "", // TODO: Add Sentry Organisation here
+	// SENTRY: {
+	// 	RELEASE: APP_VERSION,
+	// 	DSN: process.env.VITE_SENTRY_DSN,
+	// 	PROJECT: process.env.VITE_ORGANISATION_PROJECT,
+	// 	ORGANISATION: process.env.VITE_ORGANISATION,
+	// },
+
+	// Google Configs
+	// ============================================================
+	GOOGLE: {
+		OAUTH_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID,
+		OAUTH_PROVIDER_CLIENT_ID:
+			process.env.NEXT_PUBLIC_GOOGLE_OAUTH_PROVIDER_CLIENT_ID,
+		OAUTH_MAPS_KEY: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_MAPS_KEY,
+	},
+
+	HELP_CRUNCH: {
+		HELP_CRUNCH_APP_ID: process.env.NEXT_PUBLIC_HELP_CRUNCH_APP_ID,
 	},
 };
 

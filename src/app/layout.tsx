@@ -2,6 +2,9 @@ import QueryClientConfig from "@/configs/QueryClientConfig";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import React from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { CONFIGS } from "@/configs";
+import useHelpCrunchIdentify from "@/hooks/useHelpCrunchIdentify";
 
 export const metadata: Metadata = {
 	title: "Migranium: Workflow Automation, Operations Analytics, Queue Management and Scheduling App",
@@ -128,10 +131,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<QueryClientConfig>
-			<html lang="en">
-				<body>{children}</body>
-			</html>
-		</QueryClientConfig>
+		<GoogleOAuthProvider
+			clientId={CONFIGS.GOOGLE.OAUTH_PROVIDER_CLIENT_ID ?? ""}
+		>
+			<QueryClientConfig>
+				<html lang="en">
+					<body>{children}</body>
+				</html>
+			</QueryClientConfig>
+		</GoogleOAuthProvider>
 	);
 }

@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const HeroSection: React.FC<{
 	setShowBookDemo: Dispatch<SetStateAction<boolean>>;
@@ -65,17 +66,11 @@ const HeroSection: React.FC<{
 							>
 								Book A Demo
 							</Button>
-							<Button
-								disabled={false}
-								onClick={() => {
-									window.open(
-										"https://admin.migranium.com/sign-up"
-									);
-								}}
-								className="h-10 w-[133px] rounded-[6px] border border-[#E5E5E7] bg-[#043B6D] text-base font-semibold text-white hover:border-[#34D3C4] hover:text-[#34D3C4]"
-							>
-								Sign Up
-							</Button>
+							<Link href="/sign-up">
+								<Button className="h-10 w-[133px] rounded-[6px] border border-[#E5E5E7] bg-[#043B6D] text-base font-semibold text-white hover:border-[#34D3C4] hover:text-[#34D3C4]">
+									Sign Up
+								</Button>
+							</Link>
 						</div>
 					</div>
 					<figure className="flex flex-col items-center mlg:space-y-[74px]">
@@ -97,17 +92,11 @@ const HeroSection: React.FC<{
 							>
 								Book A Demo
 							</Button>
-							<Button
-								disabled={false}
-								onClick={() => {
-									window.open(
-										"https://admin.migranium.com/sign-up"
-									);
-								}}
-								className="h-12 w-[138px] rounded-[6px] border border-[#E5E5E7] bg-[#043B6D] text-base font-semibold text-white hover:border-[#34D3C4] hover:text-[#34D3C4]"
-							>
-								Sign Up
-							</Button>
+							<Link href="/sign-up">
+								<Button className="h-12 w-[138px] rounded-[6px] border border-[#E5E5E7] bg-[#043B6D] text-base font-semibold text-white hover:border-[#34D3C4] hover:text-[#34D3C4]">
+									Sign Up
+								</Button>
+							</Link>
 						</figcaption>
 					</figure>
 				</div>
