@@ -1,27 +1,55 @@
 "use client";
 
 import useCustomToast from "@/components/CustomToast";
+import { useHandleLoginSuccess } from "@/hooks/useLoginSuccess";
 import { UseQueryError } from "@/hooks/useQueryError";
 import {
-	APIVersion1GetRequest,
+	APIVersion1GetBusinessInformation,
+	APIVersion1GetSubscriptionPlans,
+	APIVersion1GetUserInformation,
 	APIVersion1GoogleRegister,
 	APIVersion1Register,
 } from "@/http/v1";
+import { AddLocationType } from "@/types/onboarding";
 import { SignUpType, User } from "@/types/signup";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
+import { useEffect } from "react";
+import useUserStore from "../useUserStore";
 
 export const useRegisterUser = (
-	onSuccess: (data: AxiosResponse<User>) => void = () => {
+	onSuccess: (
+		data: AxiosResponse<{
+			status: boolean;
+			message: string;
+			user: User;
+			token: string;
+		}>
+	) => void = () => {
 		return;
 	},
-	onError: (error: Error) => void = () => {
+	onError: (
+		error: AxiosError<{ errors: Record<string, string> }>
+	) => void = () => {
 		return;
 	}
 ) => {
-	return useMutation<AxiosResponse<User>, Error, SignUpType>({
+	const handleLoginSuccess = useHandleLoginSuccess();
+	return useMutation<
+		AxiosResponse<{
+			status: boolean;
+			message: string;
+			user: User;
+			token: string;
+		}>,
+		AxiosError<{ errors: Record<string, string> }>,
+		SignUpType
+	>({
 		mutationFn: APIVersion1Register,
-		onSuccess,
+		onSuccess: (data) => {
+			handleLoginSuccess(data.data);
+			onSuccess(data);
+		},
 		onError,
 	});
 };
@@ -71,23 +99,42 @@ export const useGoogleRegisterUser = (
 	});
 };
 
-export const GetRequestSlice = (
-	onError: (error: Error | null) => void = () => {
-		return;
-	}
+export const useGetUserInformation = (
+	isEnabled: boolean = true,
+	onError?: (error: AxiosError | null) => void
 ) => {
-	const getRequestQuery = useQuery<
-		AxiosResponse<Record<string, string>>,
-		Error
-	>({
-		queryKey: ["query-key"],
-		queryFn: APIVersion1GetRequest,
+	const handleLoginSuccess = useHandleLoginSuccess();
+	const getUserInformation = useQuery<AxiosResponse<User>, AxiosError>({
+		enabled: isEnabled,
+		queryKey: ["user-info"],
+		queryFn: APIVersion1GetUserInformation,
+		retry: 3,
 	});
+
+	useEffect(() => {
+		if (getUserInformation?.data?.data)
+			handleLoginSuccess({ user: getUserInformation?.data.data });
+	}, [getUserInformation.isSuccess]);
 
 	UseQueryError({
-		isError: getRequestQuery.isError,
-		onError: () => onError?.(getRequestQuery.error),
+		isError: getUserInformation.isError,
+		onError: () => onError?.(getUserInformation.error),
 	});
 
-	return getRequestQuery;
+	return getUserInformation;
+};
+
+export const useGetUserInformationMutation = (
+	onSuccess?: (data: AxiosResponse | null) => void,
+	onError?: (error: AxiosError | null) => void
+) => {
+	const handleLoginSuccess = useHandleLoginSuccess();
+	return useMutation<AxiosResponse<User>, AxiosError>({
+		mutationFn: APIVersion1GetUserInformation,
+		onSuccess: (data) => {
+			handleLoginSuccess({ user: data.data });
+			onSuccess?.(data);
+		},
+		onError,
+	});
 };

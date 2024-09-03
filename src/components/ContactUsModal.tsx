@@ -10,7 +10,7 @@ import { z } from "zod";
 import useCustomToast from "./CustomToast";
 import Checkbox from "./ui-extended/checkbox";
 import { LoaderButton } from "./ui-extended/loader-button";
-import { Dialog, DialogContent } from "./ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import {
@@ -124,7 +124,7 @@ const ContactUsModal: React.FC<{
 							<IoClose className="fill-[#858C95]" size={24} />
 						</figure>
 					</div>
-					<div className="flex flex-col space-y-2">
+					<DialogTitle className="flex flex-col space-y-2">
 						<h4 className="text-xl font-medium tracking-[-1%] text-[#323539]">
 							Get in Touch with Us
 						</h4>
@@ -133,7 +133,7 @@ const ContactUsModal: React.FC<{
 							and happy to help! Please leave a message and we
 							will get back to you shortly.
 						</p>
-					</div>
+					</DialogTitle>
 					<div className="w-full flex-col space-y-6">
 						<div className="flex w-full items-start justify-between sm:space-x-4 msm:flex-col msm:space-y-4">
 							<div className="flex-1 space-y-1.5">

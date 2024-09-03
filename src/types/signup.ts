@@ -131,3 +131,10 @@ export interface GoogleUserCompleteRegisterParama {
 		| undefined;
 	profile: GoogleUserProfile;
 }
+
+export interface BusinessCategory {
+	id: number;
+	name: string;
+	created_at: Date | null;
+	updated_at: Date | null;
+}

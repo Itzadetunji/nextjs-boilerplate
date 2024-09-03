@@ -1,7 +1,7 @@
 import { User } from "@/types/signup";
 import useUserStore from "../store/useUserStore";
 import { setCookie } from "../utils/cookies";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { changeTheme } from "@/utils/general";
 
 export const useHandleLoginSuccess = () => {
@@ -12,13 +12,13 @@ export const useHandleLoginSuccess = () => {
 	}));
 
 	return (data: {
-		status: boolean;
-		message: string;
+		status?: boolean;
+		message?: string;
 		user: User;
-		token: string;
+		token?: string;
 	}) => {
 		// Set cookies and user state
-		setCookie("ac-token", data.token, 7);
+		if (data.token) setCookie("ac-token", data.token, 7);
 		setUser(data.user);
 
 		if (!data.user) {
@@ -59,7 +59,10 @@ export const useHandleLoginSuccess = () => {
 					// );
 					setOnboardingState(3);
 					changeTheme(data.user.business.theme ?? "#005893");
-					router.push("/dashboard/waitlist");
+					if (localStorage.getItem("product_type") === "room_booking")
+						window.open("https://spaces.migranium.com", "_self");
+					else if (localStorage.getItem("product_type") === "primary")
+						window.open("https://admin.migranium.com", "_self");
 				} else {
 					setOnboardingState(1);
 					router.push("/onboarding/add-location");

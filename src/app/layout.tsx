@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import React from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { CONFIGS } from "@/configs";
-import useHelpCrunchIdentify from "@/hooks/useHelpCrunchIdentify";
+import "mingcute_icon/font/Mingcute.css";
 
 export const metadata: Metadata = {
 	title: "Migranium: Workflow Automation, Operations Analytics, Queue Management and Scheduling App",
@@ -136,6 +136,12 @@ export default function RootLayout({
 		>
 			<QueryClientConfig>
 				<html lang="en">
+					<head>
+						<script
+							defer
+							src={`https://maps.googleapis.com/maps/api/js?key=${CONFIGS.GOOGLE.OAUTH_MAPS_KEY}&libraries=places`}
+						></script>
+					</head>
 					<body>{children}</body>
 				</html>
 			</QueryClientConfig>

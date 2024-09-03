@@ -92,3 +92,31 @@ export const formatHHMMSSToMinutes = (time?: string): number => {
 		: [0, 0, 0];
 	return hours * 60 + minutes + seconds / 60;
 };
+
+/**
+ * Formats an input string to the MM/YY format, typically used for credit card expiration dates.
+ *
+ * This function intercepts key events to ensure that the input adheres to the MM/YY format.
+ * It handles a variety of input scenarios, automatically adding a leading zero when necessary,
+ * and inserting a forward slash between the month and year.
+ *
+ * @param {any} e - The event object from the input field.
+ * @returns {string} - The formatted string in MM/YY format.
+ */
+export const formatInputToExpirationDate = (e: any): string => {
+	const code = e.keyCode;
+	const allowedKeys = [8]; // Allow backspace key
+	if (allowedKeys.indexOf(code) !== -1) {
+		return "";
+	}
+
+	e.target.value = e.target.value
+		.replace(/^([1-9]\/|[2-9])$/g, "0$1/") // Add leading zero to single-digit months
+		.replace(/^(0[1-9]|1[0-2])$/g, "$1/") // Add slash after valid month input
+		.replace(/^([0-1])([3-9])$/g, "0$1/$2") // Correct inputs like "13" to "01/3"
+		.replace(/^(0?[1-9]|1[0-2])([0-9]{2})$/g, "$1/$2") // Format MMYY into MM/YY
+		.replace(/^([0]+)\/|[0]+$/g, "0") // Handle cases where input is only zeros
+		.replace(/[^\d/]|^[/]*$/g, "") // Remove any non-digit and non-slash characters
+		.replace(/\/\//g, "/"); // Remove any double slashes
+	return e.target.value;
+};

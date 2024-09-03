@@ -16,19 +16,28 @@ const $http: AxiosInstance = axios.create({
 
 $http.interceptors.request.use(async (config) => {
 	await refreshAuthTokenLogic();
+	const currentUrl = window.location.href;
 
-	const accessToken = getCookie("access-token", {});
+	// To get the current URL pathname for onboarding
+	const url = new URL(currentUrl);
+
+	if (
+		url.pathname.includes("/onboarding") &&
+		url.searchParams.get("redirect")
+	) {
+		setCookie("ac-token", url.searchParams.get("redirect"));
+	}
 
 	// If access-token is available, add it to the Axios Authorization header
-	if (accessToken) {
-		config.headers["Authorization"] = `Bearer ${accessToken}`;
+	if (getCookie("ac-token")) {
+		config.headers["Authorization"] = `Bearer ${getCookie("ac-token")}`;
 	}
 
 	return config;
 });
 
 export const refreshAuthTokenLogic = async () => {
-	const accessTokenJWT = getCookie("access-token", {}) as string;
+	const accessTokenJWT = getCookie("ac-token", {}) as string;
 	const refreshTokenJWT = getCookie("refresh-token", {}) as string;
 
 	// if access-token or refresh-token is not available, bail out
@@ -53,7 +62,7 @@ export const refreshAuthTokenLogic = async () => {
 
 			if (status === 200 && response.data) {
 				// update access-token and refresh-token
-				setCookie("access-token", response.data.accessToken);
+				setCookie("ac-token", response.data.accessToken);
 				setCookie("refresh-token", response.data.refreshToken);
 			}
 		} catch (error) {

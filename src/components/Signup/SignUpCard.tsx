@@ -1,18 +1,18 @@
+import RequestIsLoading from "@/components/RequestIsLoading";
+import { cn } from "@/lib/utils";
+import { useGoogleRegisterUser, useRegisterUser } from "@/store/slices/auth";
+import { SignUpSchema, SignUpType } from "@/types/signup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
 import useUserStore from "../../store/useUserStore";
 import useCustomToast from "../CustomToast";
-import RequestIsLoading from "@/components/RequestIsLoading";
 import { LoaderButton } from "../ui-extended/loader-button";
-import Link from "next/link";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { cn } from "@/lib/utils";
-import { SignUpSchema, SignUpType } from "@/types/signup";
-import { useGoogleRegisterUser, useRegisterUser } from "@/store/slices/auth";
+import { Label } from "../ui/label";
 
 const SignUpCard: React.FC<{
 	//
@@ -27,21 +27,32 @@ const SignUpCard: React.FC<{
 		resolver: zodResolver(SignUpSchema),
 	});
 	const [confirmPassword, setConfirmPassword] = useState("");
+	const router = useRouter();
 
-	const registerUserMutaion = useRegisterUser(undefined, undefined);
+	const registerUserMutaion = useRegisterUser(
+		() => {
+			router.push("/onboarding/about-business");
+		},
+		(error) => {
+			const errors = Object.keys(error.response?.data.errors ?? {})[0];
+			if (
+				error.response?.data.errors[errors][0].includes(
+					"The email has already been taken."
+				)
+			)
+				window.location.replace("https://admin.migranium.com/");
+			setError("root", {
+				message: error.response?.data.errors[errors][0],
+			});
+		}
+	);
 	const googleRegisterUserMutation = useGoogleRegisterUser();
 
 	const reset = useUserStore((s) => s.reset);
 	const customToast = useCustomToast();
 
 	const onSubmit: SubmitHandler<SignUpType> = async (data) => {
-		try {
-			registerUserMutaion.mutate(data);
-		} catch (error) {
-			setError("root", {
-				message: "An error occured kindly try again later",
-			});
-		}
+		registerUserMutaion.mutate(data);
 	};
 
 	const responseMessage = (response: CredentialResponse) => {
@@ -85,9 +96,9 @@ const SignUpCard: React.FC<{
 					</Label>
 					<Input {...register("name")} />
 					{errors.name?.message && (
-						<p className="mt-1.5 text-sm text-red-500">
+						<small className="mt-1.5 text-sm text-red-500">
 							{errors.name?.message}
-						</p>
+						</small>
 					)}
 				</div>
 				<div className="space-y-1.5">
@@ -96,9 +107,9 @@ const SignUpCard: React.FC<{
 					</Label>
 					<Input {...register("email")} />
 					{errors.email?.message && (
-						<p className="mt-1.5 text-sm text-red-500">
+						<small className="mt-1.5 text-sm text-red-500">
 							{errors.email?.message}
-						</p>
+						</small>
 					)}
 				</div>
 
@@ -106,7 +117,7 @@ const SignUpCard: React.FC<{
 					<Label>
 						Password <span className="text-red-500">*</span>
 					</Label>
-					<Input {...register("password")} />
+					<Input type="password" {...register("password")} />
 
 					<small
 						className={cn("mt-1.5 text-sm text-[#858C95]", {
@@ -121,6 +132,7 @@ const SignUpCard: React.FC<{
 						Confirm Password <span className="text-red-500">*</span>
 					</Label>
 					<Input
+						type="password"
 						onChange={(e) => {
 							setConfirmPassword(e.target.value);
 						}}
@@ -134,6 +146,11 @@ const SignUpCard: React.FC<{
 						)}
 				</div>
 			</div>
+			{errors.root?.message && (
+				<p className="mt-1.5 px-4 text-sm text-red-500 md:px-8">
+					{errors.root?.message}
+				</p>
+			)}
 			<div className="px-4 md:px-8">
 				By creating an account, you agree to Migranium&apos;s{" "}
 				<Link
@@ -150,6 +167,7 @@ const SignUpCard: React.FC<{
 					Policies
 				</Link>{" "}
 			</div>
+
 			<div className="flex items-center justify-between rounded-b-[10px] bg-[#FAFBFC] px-4 pb-6 pt-4 md:px-8 mmd:flex-col mmd:space-y-6">
 				<LoaderButton
 					disabled={registerUserMutaion.isPending}
