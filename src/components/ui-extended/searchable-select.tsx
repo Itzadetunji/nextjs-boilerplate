@@ -9,7 +9,11 @@ import {
 } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
 import { CommandLoading, Command as CommandPrimitive } from "cmdk";
-import React, { type KeyboardEvent } from "react";
+import React, {
+	HTMLAttributes,
+	HTMLInputAutoCompleteAttribute,
+	type KeyboardEvent,
+} from "react";
 import { LuCheck } from "react-icons/lu";
 
 export type SelectOption = Record<"value" | "label", string> &
@@ -26,6 +30,7 @@ type SearchableSelectProps = {
 	isLoading?: boolean;
 	disabled?: boolean;
 	placeholder?: string;
+	autoComplete?: HTMLInputAutoCompleteAttribute;
 };
 
 export const SearchableSelect = ({
@@ -39,6 +44,7 @@ export const SearchableSelect = ({
 	disabled,
 	shouldFilter,
 	isLoading = false,
+	autoComplete,
 }: SearchableSelectProps) => {
 	const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -125,6 +131,7 @@ export const SearchableSelect = ({
 							}
 				}
 				showSearchIcon={false}
+				autoComplete={autoComplete}
 			/>
 
 			<div className="relative mt-1">

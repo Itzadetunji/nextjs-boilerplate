@@ -40,7 +40,7 @@ import {
 } from "@/utils/general";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { NextPage } from "next";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 const AboutBusiness: NextPage = () => {
@@ -55,10 +55,18 @@ const AboutBusiness: NextPage = () => {
 		formState: { errors, isValid },
 	} = useForm<AddBusinessInfoData | FieldValues>({
 		resolver: zodResolver(AddBusinessInfoSchema),
-		mode: "onChange",
+		mode: "all",
 		reValidateMode: "onChange",
 		defaultValues: {
-			business_category_id: "0",
+			name: user?.business?.name ?? "",
+			address: user?.business?.address ?? "",
+			country: "",
+			state: "",
+			city: user?.business?.city,
+			phone_number: user?.business?.phone_number?.slice(-10) ?? undefined,
+			zip_code: user?.business?.zip_code,
+			business_category_id:
+				user?.business?.business_category_id?.toString() ?? "0",
 			product_type: "primary",
 			logo: null,
 		},
@@ -81,11 +89,6 @@ const AboutBusiness: NextPage = () => {
 
 	const logoRef: any | null = useRef(null);
 
-	const businessCategoryIdValue = useMemo(() => {
-		const categoryId = watch("business_category_id");
-		return categoryId === "0" ? undefined : categoryId.toString();
-	}, [watch("business_category_id")]);
-
 	const addressAutocomplete = useAddressAutocomplete(
 		(address, city, province, country, postalCode) => {
 			setValue("address", address);
@@ -100,7 +103,6 @@ const AboutBusiness: NextPage = () => {
 
 			const newProvinceOptions = changeCountry(countryValue);
 			setProvinceOptions(newProvinceOptions);
-			// console.log(countryValue);
 
 			const newProvince = findProvinceByLabel(
 				newProvinceOptions,
@@ -147,22 +149,25 @@ const AboutBusiness: NextPage = () => {
 		newFormData.append("state", updatedState);
 		newFormData.append("city", data.city ?? "");
 		newFormData.append("phone_number", updatedPhoneNumber);
+		newFormData.append("zip_code", data.zip_code);
 		newFormData.append("product_type", data.product_type);
 		localStorage.setItem("product_type", data.product_type);
 		newFormData.append(
 			"business_category_id",
 			data.business_category_id.toString()
 		);
-		console.log(newFormData);
+
 		if (data.logo) newFormData.append("logo", data.logo);
+		console.log(user?.business);
 		if (user?.business) updateBusinessMutation.mutate(newFormData);
 		else addBusinessMutation.mutate(newFormData);
 	};
 
 	const updateBusinessCheckThenUpdateFields = () => {
 		if (user?.business) {
-			setValue("name", user?.business?.name ?? "");
-			setValue("address", user?.business.address ?? "");
+			// console.log("dewd");
+			// setValue("name", user?.business?.name ?? "");
+			// setValue("address", user?.business.address ?? "");
 			const countryValue = findCountryByLabel(
 				user?.business?.country ?? ""
 			);
@@ -181,16 +186,11 @@ const AboutBusiness: NextPage = () => {
 				countryValue
 			);
 
-			setValue(
-				"business_category_id",
-				user?.business?.business_category_id?.toString() ?? "0"
-			);
-
-			setValue("city", user?.business.city ?? "");
-			setValue(
-				"phone_number",
-				user?.business.phone_number?.slice(-10) ?? ""
-			);
+			console.log(user?.business?.business_category_id);
+			// setValue(
+			// 	"business_category_id",
+			// 	user?.business?.business_category_id?.toString()
+			// );
 			setCountryCode(user?.business.phone_number?.slice(0, -10) ?? "+1");
 			trigger();
 		} else {
@@ -207,7 +207,7 @@ const AboutBusiness: NextPage = () => {
 	useEffect(() => {
 		updateBusinessCheckThenUpdateFields();
 	}, []);
-
+	// console.log(user?.business.business_category_id?.toString())
 	return (
 		<form
 			className="relative flex h-fit max-h-fit w-full max-w-[656px] flex-col space-y-4 rounded-[10px] bg-white shadow-[0px_10px_15px_-3px_rgba(16,24,40,0,1)]"
@@ -219,7 +219,7 @@ const AboutBusiness: NextPage = () => {
 			</p>
 			<div className="flex flex-col space-y-7 px-8">
 				<div className="space-y-1.5">
-					<Label>
+					<Label className="text-[#323539]">
 						Business Name <span className="text-red-500">*</span>
 					</Label>
 					<Input {...register("name")} />
@@ -237,7 +237,7 @@ const AboutBusiness: NextPage = () => {
 						</label>
 						<div>
 							<Select
-								value={businessCategoryIdValue}
+								value={watch("business_category_id").toString()}
 								onValueChange={(value) =>
 									setValue("business_category_id", value)
 								}
@@ -333,7 +333,7 @@ const AboutBusiness: NextPage = () => {
 				</div>
 				<div className="flex w-full flex-1 items-center space-x-7">
 					<div className="flex flex-1 flex-col space-y-1.5">
-						<Label>
+						<Label className="text-[#323539]">
 							Address Line <span className="text-red-500">*</span>
 						</Label>
 
@@ -348,7 +348,12 @@ const AboutBusiness: NextPage = () => {
 								label: watch("address"),
 								value: watch("address"),
 							}}
-							onTypingChange={addressAutocomplete.setValue}
+							onTypingChange={(value) => {
+								addressAutocomplete.handleSelectSuggestion(
+									value
+								);
+								addressAutocomplete.setValue(value);
+							}}
 							onValueChange={(option) => {
 								addressAutocomplete.handleSelectSuggestion(
 									option.label
@@ -362,6 +367,7 @@ const AboutBusiness: NextPage = () => {
 									? "No address found"
 									: "Enter an address"
 							}
+							autoComplete="new"
 						/>
 						{errors.address &&
 							(errors?.address?.message as string)?.length && (
@@ -372,19 +378,19 @@ const AboutBusiness: NextPage = () => {
 					</div>
 
 					<div className="flex flex-1 flex-col space-y-1.5">
-						<Label>Zip Code</Label>
+						<Label className="text-[#323539]">Zip Code</Label>
 
-						<Input className="m-0" {...register("postal_code")} />
-						{errors.postal_code?.message && (
+						<Input className="m-0" {...register("zip_code")} />
+						{errors.zip_code?.message && (
 							<small className="text-sm text-red-500">
-								{errors.postal_code?.message as string}
+								{errors.zip_code?.message as string}
 							</small>
 						)}
 					</div>
 				</div>
 				<div className="flex items-center justify-between space-x-7">
 					<div className="flex flex-1 flex-col space-y-1.5">
-						<Label>
+						<Label className="text-[#323539]">
 							Country <span className="text-red-500">*</span>
 						</Label>
 
@@ -431,7 +437,7 @@ const AboutBusiness: NextPage = () => {
 							)}
 					</div>
 					<div className="flex flex-1 flex-col space-y-1.5">
-						<Label>
+						<Label className="text-[#323539]">
 							State <span className="text-red-500">*</span>
 						</Label>
 						<Select
@@ -477,11 +483,12 @@ const AboutBusiness: NextPage = () => {
 							)}
 					</div>
 					<div className="flex flex-1 flex-col space-y-1.5">
-						<Label>
+						<Label className="text-[#323539]">
 							City <span className="text-red-500">*</span>
 						</Label>
 						<Input
 							className="border border-[#E4E4E7] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)]"
+							autoComplete="new"
 							{...register("city")}
 						/>
 						{errors.city &&
@@ -526,8 +533,7 @@ const AboutBusiness: NextPage = () => {
 				<LoaderButton
 					disabled={
 						updateBusinessMutation.isPending ||
-						addBusinessMutation.isPending ||
-						!isValid
+						addBusinessMutation.isPending
 					}
 					loading={
 						updateBusinessMutation.isPending ||
@@ -535,12 +541,12 @@ const AboutBusiness: NextPage = () => {
 					}
 					loaderSize={20}
 					className={cn(
-						"relative h-10 max-w-[103px] flex-1 rounded-md text-white duration-200 ease-in-out",
-						{
-							"bg-[#E5E5E7] text-[#858C95] hover:bg-[#E5E5E7]":
-								!isValid,
-							"bg-primary text-white": isValid,
-						}
+						"relative h-10 max-w-[103px] flex-1 rounded-md text-white duration-200 ease-in-out"
+						// {
+						// 	"bg-[#E5E5E7] text-[#858C95] hover:bg-[#E5E5E7]":
+						// 		!isValid,
+						// 	"bg-primary text-white": isValid,
+						// }
 					)}
 					type="submit"
 				>

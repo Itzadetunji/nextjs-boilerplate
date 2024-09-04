@@ -1,7 +1,6 @@
 "use client";
 
 import useCustomToast from "@/components/CustomToast";
-import Loader from "@/components/Loader";
 import RequestIsLoading from "@/components/RequestIsLoading";
 import { LoaderButton } from "@/components/ui-extended/loader-button";
 import { Button } from "@/components/ui/button";
@@ -99,8 +98,6 @@ const AddPaymentMethod: NextPage = () => {
 		setValue("payment_information.card.number", formattedValue);
 	};
 
-	console.log(errors);
-
 	return (
 		<form
 			className="flex h-fit max-h-fit w-full max-w-[656px] flex-col space-y-4 rounded-[10px] bg-white shadow-[0px_20px_25px_-5px_rgba(16,24,40,0.10),0px_8px_10px_-6px_rgba(16,24,40,0.10)]"
@@ -111,7 +108,7 @@ const AddPaymentMethod: NextPage = () => {
 			</p>
 			<div className="flex flex-col space-y-7 px-8">
 				<div className="space-y-1.5">
-					<Label>
+					<Label className="text-[#323539]">
 						Name on card <span className="text-red-500">*</span>
 					</Label>
 					<Input
@@ -213,7 +210,7 @@ const AddPaymentMethod: NextPage = () => {
 				</div>
 				<div className="flex flex-col space-y-1.5">
 					<div className="space-y-1.5">
-						<Label>
+						<Label className="text-[#323539]">
 							Zip Code <span className="text-red-500">*</span>
 						</Label>
 						<Input
@@ -251,14 +248,14 @@ const AddPaymentMethod: NextPage = () => {
 				<Button
 					disabled={
 						addBusinessCardMutation.isPending ||
-						getUserMutation.isPending ||
-						!isValid
+						getUserMutation.isPending
 					}
 					className="flex w-[103px] px-0 font-semibold leading-[22px] text-[#323539]"
 					onClick={() => {
 						getUserMutation.mutate();
 					}}
 					variant="ghost"
+					type="button"
 				>
 					Skip for now
 				</Button>

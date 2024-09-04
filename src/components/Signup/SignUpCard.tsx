@@ -40,10 +40,9 @@ const SignUpCard: React.FC<{
 					"The email has already been taken."
 				)
 			)
-				window.location.replace("https://admin.migranium.com/");
-			setError("root", {
-				message: error.response?.data.errors[errors][0],
-			});
+				setError("root", {
+					message: error.response?.data.errors[errors][0],
+				});
 		}
 	);
 	const googleRegisterUserMutation = useGoogleRegisterUser();
@@ -81,17 +80,17 @@ const SignUpCard: React.FC<{
 				<h3 className="text-[22px] font-semibold leading-[30px] tracking-[-0.22px] text-[#323539]">
 					Create an account
 				</h3>
-				<Link
-					href="/sign-in"
+				<a
+					href="https://admin.migranium.com/sign-in"
 					className="font-normal tracking-[-1%] text-[#858C95]"
 				>
 					Already have an account?
 					<span className="text-[#195388]"> Sign in</span>
-				</Link>
+				</a>
 			</div>
 			<div className="flex flex-col space-y-6 px-4 md:px-8">
 				<div className="space-y-1.5">
-					<Label>
+					<Label className="text-[#323539]">
 						Full Name <span className="text-red-500">*</span>
 					</Label>
 					<Input {...register("name")} />
@@ -102,7 +101,7 @@ const SignUpCard: React.FC<{
 					)}
 				</div>
 				<div className="space-y-1.5">
-					<Label>
+					<Label className="text-[#323539]">
 						Email Address <span className="text-red-500">*</span>
 					</Label>
 					<Input {...register("email")} />
@@ -114,7 +113,7 @@ const SignUpCard: React.FC<{
 				</div>
 
 				<div className="space-y-1.5">
-					<Label>
+					<Label className="text-[#323539]">
 						Password <span className="text-red-500">*</span>
 					</Label>
 					<Input type="password" {...register("password")} />
@@ -128,7 +127,7 @@ const SignUpCard: React.FC<{
 					</small>
 				</div>
 				<div className="space-y-1.5">
-					<Label>
+					<Label className="text-[#323539]">
 						Confirm Password <span className="text-red-500">*</span>
 					</Label>
 					<Input

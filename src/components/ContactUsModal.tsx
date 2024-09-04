@@ -137,7 +137,7 @@ const ContactUsModal: React.FC<{
 					<div className="w-full flex-col space-y-6">
 						<div className="flex w-full items-start justify-between sm:space-x-4 msm:flex-col msm:space-y-4">
 							<div className="flex-1 space-y-1.5">
-								<Label>
+								<Label className="text-[#323539]">
 									Full Name{" "}
 									<span className="text-red-500">*</span>
 								</Label>
@@ -153,7 +153,7 @@ const ContactUsModal: React.FC<{
 							</div>
 
 							<div className="flex-1 space-y-1.5">
-								<Label>
+								<Label className="text-[#323539]">
 									Email Address{" "}
 									<span className="text-red-500">*</span>
 								</Label>
@@ -169,7 +169,9 @@ const ContactUsModal: React.FC<{
 							</div>
 							<div>
 								<div className="flex-1 space-y-1.5">
-									<Label>Phone Number</Label>
+									<Label className="text-[#323539]">
+										Phone Number
+									</Label>
 									<div className="flex">
 										<Select
 											value={countryCode}
@@ -231,7 +233,7 @@ const ContactUsModal: React.FC<{
 						</div>
 
 						<div className="space-y-1.5">
-							<Label>
+							<Label className="text-[#323539]">
 								Message <span className="text-red-500">*</span>
 							</Label>
 							<Textarea

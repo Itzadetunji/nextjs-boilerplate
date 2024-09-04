@@ -41,14 +41,14 @@ export const AddBusinessInfoSchema = z.object({
 	address: z
 		.string()
 		.min(4, { message: "Address must be at least 4 characters" }),
-	country: z.string().optional(),
-	state: z.string().optional(),
-	city: z.string().optional(),
+	country: z.string(),
+	state: z.string(),
+	city: z.string(),
 	phone_number: z.string().optional(),
 	business_category_id: z
 		.string()
 		.min(1, { message: "Kindly select a business category" }),
-	postal_code: z.string().optional(),
+	zip_code: z.string().optional(),
 	product_type: z.string(),
 	logo: z.any().optional(),
 });

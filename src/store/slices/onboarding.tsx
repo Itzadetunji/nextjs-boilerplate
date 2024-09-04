@@ -106,7 +106,7 @@ export const useAddBusiness = (
 		mutationFn: APIVersion1AddBusinessDetails,
 		onSuccess: (data) => {
 			onSuccess(data);
-			setUser({ business: data.data.data } as User);
+			setUser({ business: data.data } as User);
 			setOnboardingState(1);
 			router.push("/onboarding/add-location");
 		},
@@ -174,7 +174,7 @@ export const useUpdateBusiness = (
 };
 
 export const useAddBusinessLocation = (
-	onSuccess: (data: AxiosResponse<{ location: Location }>) => void = () => {
+	onSuccess: (data: { location: Location }) => void = () => {
 		return;
 	},
 	onError: (error: AxiosError) => void = () => {
@@ -190,25 +190,27 @@ export const useAddBusinessLocation = (
 	);
 
 	return useMutation<
-		AxiosResponse<{ location: Location }>,
+		{ location: Location },
 		AxiosError<any>,
 		AddLocationType
 	>({
 		mutationFn: APIVersion1AddBusinessLocation,
-		onSuccess: (data) => {
+		onSuccess: (data: { location: Location }) => {
 			onSuccess(data);
 
 			setOnboardingLocationInfo({
-				id: data.data.location.id,
+				id: data.location.id,
 				approximate_waiting_time:
-					data.data.location.approximate_waiting_time ?? "00:15:00",
+					data.location.approximate_waiting_time ?? "00:15:00",
 				schedule_block_in_min:
-					data.data.location.schedule_block_in_min ?? 15,
-				time_zone: data.data.location.time_zone ?? "",
+					data.location.schedule_block_in_min ?? 15,
+				time_zone: data.location.time_zone ?? "",
 				time_slots: slots,
 			});
 			setOnboardingState(2);
-			router.push("/onboarding/add-payment-method");
+			setTimeout(() => {
+				router.push("/onboarding/add-payment-method");
+			}, 1000);
 		},
 		onError: (error) => {
 			if (error.status === 403) {

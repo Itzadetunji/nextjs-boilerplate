@@ -50,13 +50,14 @@ const AddLocationTimer: React.FC<AddLocationTimerProps> = ({
 	// Convert 12-hour format to 24-hour format based on the meridian (AM/PM)
 	const convertTo24HourFormat = (hour: string, meridian: "AM" | "PM") => {
 		let hourInt = parseInt(hour);
-		if (meridian === "PM" && hourInt < 12) {
+		if (meridian === "PM" && hourInt < 12 && hourInt !== 0) {
 			hourInt += 12;
 		} else if (meridian === "AM" && hourInt > 12) {
 			hourInt -= 12;
 		} else if (meridian === "AM" && hourInt === 12) {
 			hourInt = 0;
 		}
+
 		return hourInt.toString().padStart(2, "0");
 	};
 
@@ -331,10 +332,11 @@ const AddLocationTimer: React.FC<AddLocationTimerProps> = ({
 																			2,
 																			"0"
 																		)
-																: +time.start_time.split(
+																: time.start_time.split(
 																			":"
-																	  )[0] === 0
-																	? "12" // Handle midnight as 12 AM in 12-hour format
+																	  )[0] ===
+																	  "00"
+																	? "00"
 																	: time.start_time
 																			.split(
 																				":"
@@ -518,10 +520,11 @@ const AddLocationTimer: React.FC<AddLocationTimerProps> = ({
 																			2,
 																			"0"
 																		)
-																: +time.end_time.split(
+																: time.end_time.split(
 																			":"
-																	  )[0] === 0
-																	? "12" // Handle midnight as 12 AM in 12-hour format
+																	  )[0] ===
+																	  "00"
+																	? "00"
 																	: time.end_time
 																			.split(
 																				":"

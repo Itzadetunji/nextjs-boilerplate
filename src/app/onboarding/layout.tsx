@@ -47,7 +47,7 @@ const OnboardingLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
 	);
 	const getSusbscriptionPlans = useGetSubscriptionPlans();
 
-	useGetBusinessCategories();
+	const getBusinessCategories = useGetBusinessCategories();
 
 	return (
 		<>
@@ -58,7 +58,7 @@ const OnboardingLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
 						<RxChevronLeft
 							size={24}
 							fill="#323539"
-							className={`invisible ${
+							className={`${
 								pathname.includes("/onboarding/about-business")
 									? "invisible"
 									: "cursor-pointer"
@@ -119,8 +119,7 @@ const OnboardingLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
 				isLoading={
 					getBusinessInfoQuery.isLoading ||
 					getSusbscriptionPlans.isLoading ||
-					queryClient.getQueryState(["business-categories"])
-						?.status === "pending"
+					getBusinessCategories.isLoading
 				}
 				size={24}
 			/>

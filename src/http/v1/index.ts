@@ -65,7 +65,7 @@ export const APIVersion1UpdateBusinessDetails = async (
 
 export const APIVersion1AddBusinessLocation = async (
 	data: AddLocationType
-): Promise<AxiosResponse<{ location: Location }>> =>
+): Promise<{ location: Location }> =>
 	$http.post("/my-business/locations/add", data).then((res) => res.data);
 
 export const APIVersion1UpdateBusinessLocation = async (

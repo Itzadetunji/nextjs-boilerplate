@@ -42,7 +42,7 @@ const DefaultOperatingHoursModal: React.FC<{
 		<Dialog open={show} onOpenChange={setShow}>
 			<DialogContent className="max-w-[447px]">
 				<div className="flex flex-col justify-between space-y-8">
-					<DialogTitle className="flex items-center justify-between">
+					<div className="flex items-center justify-between">
 						<h1 className="text-left text-[22px] font-medium leading-[30px] -tracking-[1%] text-main-1">
 							Operating Hours
 						</h1>
@@ -54,7 +54,7 @@ const DefaultOperatingHoursModal: React.FC<{
 								setShow(false);
 							}}
 						/>
-					</DialogTitle>
+					</div>
 					<p className="leading-[20px] -tracking-[0.1px] text-[#323539]">
 						What are your regular operating hours?
 					</p>

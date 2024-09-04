@@ -55,7 +55,7 @@ const AddLocation: React.FC = () => {
 		handleSubmit,
 		setValue,
 		watch,
-		formState: { errors, isValid },
+		formState: { errors },
 	} = useForm<AddLocationType>({
 		resolver: zodResolver(AddLocationSchema),
 		defaultValues: {
@@ -336,11 +336,11 @@ const AddLocation: React.FC = () => {
 								updateSpacesOperatingHoursMutation.isPending
 							}
 							className={cn(
-								"h-10 w-full max-w-[95px] self-end px-0 font-semibold leading-[22px] text-white shadow-[0px_1px_2px_0px_rgba(16,24,40,0.04)] hover:border-transparent",
-								{
-									"bg-[#195388] text-white": isValid,
-									"bg-[#E5E5E7] text-[#858C95]": !isValid,
-								}
+								"h-10 w-full max-w-[95px] self-end px-0 font-semibold leading-[22px] text-white shadow-[0px_1px_2px_0px_rgba(16,24,40,0.04)] hover:border-transparent"
+								// {
+								// 	"bg-[#195388] text-white": isValid,
+								// 	"bg-[#E5E5E7] text-[#858C95]": !isValid,
+								// }
 							)}
 							type="submit"
 							loaderSize={20}

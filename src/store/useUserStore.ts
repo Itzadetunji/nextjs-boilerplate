@@ -36,7 +36,7 @@ const useUserStore = create<AdminStore, [["zustand/persist", AdminStore]]>(
 			setUser: (user) => {
 				if (user)
 					set((state) => {
-						console.log({ user: { ...state.user, ...user } });
+						// console.log({ user: { ...state.user, ...user } });
 						return { user: { ...state.user, ...user } };
 					});
 			},

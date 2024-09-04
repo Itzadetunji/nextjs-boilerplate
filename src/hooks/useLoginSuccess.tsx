@@ -6,10 +6,13 @@ import { changeTheme } from "@/utils/general";
 
 export const useHandleLoginSuccess = () => {
 	const router = useRouter();
-	const { setUser, setOnboardingState } = useUserStore((state) => ({
-		setUser: state.setUser,
-		setOnboardingState: state.setOnboardingState,
-	}));
+	const { setUser, setOnboardingState, onboardingState } = useUserStore(
+		(state) => ({
+			setUser: state.setUser,
+			setOnboardingState: state.setOnboardingState,
+			onboardingState: state.onboardingState,
+		})
+	);
 
 	return (data: {
 		status?: boolean;
@@ -22,7 +25,7 @@ export const useHandleLoginSuccess = () => {
 		setUser(data.user);
 
 		if (!data.user) {
-			router.push("/sign-in");
+			window.open("https://admin.migranium.com/sign-in");
 			return;
 		}
 
@@ -57,12 +60,14 @@ export const useHandleLoginSuccess = () => {
 					// 		}))
 					// 	)
 					// );
-					setOnboardingState(3);
-					changeTheme(data.user.business.theme ?? "#005893");
-					if (localStorage.getItem("product_type") === "room_booking")
-						window.open("https://spaces.migranium.com", "_self");
-					else if (localStorage.getItem("product_type") === "primary")
-						window.open("https://admin.migranium.com", "_self");
+					if (onboardingState !== 3) {
+						setOnboardingState(3);
+						changeTheme(data.user.business.theme ?? "#005893");
+					}
+					// if (localStorage.getItem("product_type") === "room_booking")
+					// window.open("https://spaces.migranium.com", "_self");
+					// if (localStorage.getItem("product_type") === "primary")
+					// else window.open("https://admin.migranium.com", "_self");
 				} else {
 					setOnboardingState(1);
 					router.push("/onboarding/add-location");

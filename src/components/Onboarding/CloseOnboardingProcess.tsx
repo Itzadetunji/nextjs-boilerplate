@@ -39,7 +39,7 @@ const CloseOnboardingProcess: React.FC<{
 							className="max-w-[130px] flex-1 py-3 text-[15px] font-semibold leading-[22px]"
 							onClick={(e) => {
 								e.preventDefault();
-								router.push("/sign-in");
+								router.push("/sign-up");
 							}}
 						>
 							Yes

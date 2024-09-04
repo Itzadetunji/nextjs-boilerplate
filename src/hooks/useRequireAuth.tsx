@@ -33,9 +33,10 @@ const RequireAuth: React.FC = () => {
 			}
 			break;
 		case 3:
-			if (pathname.startsWith("/onboarding")) {
-				router.replace("/dashboard/waitlist");
-			}
+			if (localStorage.getItem("product_type") === "room_booking")
+				window.open("https://spaces.migranium.com", "_self");
+			else if (localStorage.getItem("product_type") === "primary")
+				window.open("https://admin.migranium.com", "_self");
 			break;
 		default:
 			break;
