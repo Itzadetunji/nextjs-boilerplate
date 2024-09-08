@@ -7,6 +7,7 @@ import {
 import { OperatingHour } from "@/types/onboarding";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { GrAdd } from "react-icons/gr";
+import { TbTrash } from "react-icons/tb";
 import {
 	Select,
 	SelectContent,
@@ -687,14 +688,15 @@ const AddLocationTimer: React.FC<AddLocationTimerProps> = ({
 								{/* Delete button for the time slot */}
 								{time_slots.length > 1 && (
 									<button
-										className="size-[30px] cursor-pointer rounded-md bg-[#F5F5F5]"
+										className="grid size-[30px] cursor-pointer place-content-center rounded-md bg-[#F5F5F5]"
 										onClick={() =>
 											handleDeleteTimeSlot(
 												time_slots_index
 											)
 										}
 									>
-										<i className="mgc_delete_2_line text-[14px] before:text-[#09244B]" />
+										{/* <i className="mgc_delete_2_line text-[14px] before:!text-[#09244B]" /> */}
+										<TbTrash size={14} color="#09244B" />
 									</button>
 								)}
 							</div>
