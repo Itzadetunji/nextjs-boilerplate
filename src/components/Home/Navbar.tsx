@@ -383,14 +383,14 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
 							>
 								Book a Demo
 							</Button>
-							<Link href="/sign-up">
+							{/* <Link href="/sign-up">
 								<Button
 									className="text-base font-semibold text-[#323539]"
 									variant="ghost"
 								>
 									Sign up
 								</Button>
-							</Link>
+							</Link> */}
 						</div>
 					</motion.div>
 				)}
