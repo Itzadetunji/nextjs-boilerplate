@@ -33,7 +33,7 @@ const BookADemo: React.FC<{
 		<>
 			<Dialog open={showBookADemo} onOpenChange={setShowBookDemo}>
 				<DialogContent
-					className="max-w-full border-none bg-transparent p-0 shadow-none sm:max-w-full"
+					className="w-full max-w-full border-none bg-transparent p-0 shadow-none sm:max-w-full"
 					showCloseIcon={false}
 				>
 					<div className="relative flex h-full w-full flex-col items-center justify-center space-y-10">

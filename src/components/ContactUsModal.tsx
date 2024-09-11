@@ -128,25 +128,25 @@ const ContactUsModal: React.FC<{
 						<h4 className="text-xl font-medium tracking-[-1%] text-[#323539]">
 							Get in Touch with Us
 						</h4>
-						<p className="text-[18px] leading-[24px] tracking-[-1%] text-[#858C95]">
+						<p className="text-[18px] font-normal leading-[24px] tracking-[-1%] text-[#858C95]">
 							Got questions or need more information? We are here
 							and happy to help! Please leave a message and we
 							will get back to you shortly.
 						</p>
 					</DialogTitle>
 					<div className="w-full flex-col space-y-6">
-						<div className="flex w-full items-start justify-between sm:space-x-4 msm:flex-col msm:space-y-4">
+						<div className="flex w-full items-stretch justify-between sm:space-x-4 msm:flex-col msm:space-y-4">
 							<div className="flex-1 space-y-1.5">
 								<Label className="text-[#323539]">
 									Full Name{" "}
-									<span className="text-red-500">*</span>
+									<span className="text-destructive">*</span>
 								</Label>
 								<Input
 									className="border border-[#E4E4E7]"
 									{...register("name")}
 								/>
 								{errors.name?.message && (
-									<p className="mt-1.5 text-sm text-red-500">
+									<p className="mt-1.5 text-sm text-destructive">
 										{errors.name?.message}
 									</p>
 								)}
@@ -155,19 +155,19 @@ const ContactUsModal: React.FC<{
 							<div className="flex-1 space-y-1.5">
 								<Label className="text-[#323539]">
 									Email Address{" "}
-									<span className="text-red-500">*</span>
+									<span className="text-destructive">*</span>
 								</Label>
 								<Input
 									className="border border-[#E4E4E7]"
 									{...register("email")}
 								/>
 								{errors.email?.message && (
-									<p className="mt-1.5 text-sm text-red-500">
+									<p className="mt-1.5 text-sm text-destructive">
 										{errors.email?.message}
 									</p>
 								)}
 							</div>
-							<div>
+							<div className="flex-1">
 								<div className="flex-1 space-y-1.5">
 									<Label className="text-[#323539]">
 										Phone Number
@@ -225,7 +225,7 @@ const ContactUsModal: React.FC<{
 									</div>
 								</div>
 								{errors.phone?.message && (
-									<p className="mt-1.5 text-sm text-red-500">
+									<p className="mt-1.5 text-sm text-destructive">
 										{errors.phone?.message}
 									</p>
 								)}
@@ -234,14 +234,15 @@ const ContactUsModal: React.FC<{
 
 						<div className="space-y-1.5">
 							<Label className="text-[#323539]">
-								Message <span className="text-red-500">*</span>
+								Message{" "}
+								<span className="text-destructive">*</span>
 							</Label>
 							<Textarea
 								className="h-[124px] min-h-[75px] border border-[#E4E4E7]"
 								{...register("message")}
 							/>
 							{errors.message?.message && (
-								<p className="mt-1.5 text-sm text-red-500">
+								<p className="mt-1.5 text-sm text-destructive">
 									{errors.message?.message}
 								</p>
 							)}
@@ -274,7 +275,7 @@ const ContactUsModal: React.FC<{
 							</div>
 							{errors.agreeToTerms?.message ||
 								(errors.root?.message && (
-									<p className="mt-1.5 text-sm text-red-500">
+									<p className="mt-1.5 text-sm text-destructive">
 										{errors.agreeToTerms?.message ??
 											errors.root?.message}
 									</p>
