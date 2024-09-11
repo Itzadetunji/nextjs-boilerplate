@@ -109,7 +109,7 @@ const ContactUsModal: React.FC<{
 
 	return (
 		<Dialog open={show} onOpenChange={setShow}>
-			<DialogContent className="max-w-[886px]">
+			<DialogContent className="w-full max-w-[886px]">
 				<form
 					className="relative flex w-full flex-col items-center space-y-6"
 					onSubmit={handleSubmit(onSubmit)}
