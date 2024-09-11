@@ -1,4 +1,4 @@
-import { APIVersion1SubscribeVisitor } from "@/http/v1";
+import { APIVersion1ContactUs } from "@/http/v1";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
@@ -15,7 +15,7 @@ export const ContactUsSlice = (
 		Error,
 		Record<string, string>
 	>({
-		mutationFn: APIVersion1SubscribeVisitor,
+		mutationFn: APIVersion1ContactUs,
 		onSuccess,
 		onError,
 	});
