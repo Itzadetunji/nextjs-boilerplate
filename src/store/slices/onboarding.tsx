@@ -18,13 +18,21 @@ import {
 	UpdateBusinessCardData,
 } from "@/types/onboarding";
 import { BusinessCategory, User } from "@/types/signup";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+	useMutation,
+	UseMutationResult,
+	useQuery,
+	useQueryClient,
+} from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { FieldValues } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Location } from "../../types/signup";
 import useUserStore from "../useUserStore";
+import { APIVersion2AddLocation } from "@/http/v2";
+import { AddBusinessLocationResponseType } from "@/types/location";
+import { ErrorResponse } from "@/types";
 
 export const useGetBusinessInformation = (
 	isEnabled: boolean,
@@ -169,6 +177,40 @@ export const useUpdateBusiness = (
 				});
 				router.push("/onboarding/add-location");
 			}
+		},
+	});
+};
+
+export const AddBusinessLocationSlice = (
+	onSuccess?: (data: AddBusinessLocationResponseType) => void,
+	onError?: (error: AxiosError) => void
+): UseMutationResult<AddBusinessLocationResponseType, AxiosError, FormData> => {
+	const queryClient = useQueryClient();
+	const customToast = useCustomToast();
+
+	return useMutation<
+		AddBusinessLocationResponseType,
+		AxiosError<ErrorResponse>,
+		FormData
+	>({
+		mutationFn: APIVersion2AddLocation,
+		onSuccess: (data) => {
+			queryClient.invalidateQueries({ queryKey: ["get-locations"] });
+			onSuccess?.(data);
+			customToast(data?.message || "Location added successfully", {
+				id: "add-location",
+				type: "success",
+			});
+		},
+
+		onError: (error: AxiosError<ErrorResponse>) => {
+			customToast("An error occured", {
+				id: "add-location",
+				type: "error",
+			});
+			// displayErrorsWithTimeout(error.response.data, customToast, {
+
+			onError?.(error);
 		},
 	});
 };

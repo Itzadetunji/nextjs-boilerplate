@@ -201,13 +201,15 @@ const AboutBusiness: NextPage = () => {
 				"ON",
 				"CA"
 			);
+			setValue("address", "dqedqedqe");
 		}
 	};
 
 	useEffect(() => {
 		updateBusinessCheckThenUpdateFields();
+		console.log(getValues());
 	}, []);
-	// console.log(user?.business.business_category_id?.toString())
+
 	return (
 		<form
 			className="relative flex h-fit max-h-fit w-full max-w-[656px] flex-col space-y-4 rounded-[10px] bg-white shadow-[0px_10px_15px_-3px_rgba(16,24,40,0,1)]"
@@ -322,7 +324,7 @@ const AboutBusiness: NextPage = () => {
 						</Select>
 						<Input
 							className="h-10 self-stretch rounded-l-none border border-[#E4E4E7] py-0"
-							minLength={11}
+							minLength={10}
 							maxLength={11}
 							{...register("phone_number", {
 								minLength: 10,
